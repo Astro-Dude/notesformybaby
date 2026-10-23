@@ -141,12 +141,16 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   .date{position:static;display:block}
   nav.tabs a{font-size:17px;padding:3px 9px 1px}
 }
+@page{margin:12mm}
 @media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff}
   nav.tabs{display:none}
   .page{box-shadow:none;margin:0;max-width:none;break-before:page}
   .page:first-of-type{break-before:auto}
   figure,.card,.sticky,table.hand,.def{break-inside:avoid}
+  h2,h3,h4{break-after:avoid}
+  #printBtn,#themeBtn{display:none}
 }
 </style>
 </head>
@@ -171,6 +175,7 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
 <nav class="tabs">
   <a href="#m1">Mod I</a><a href="#m2">Mod II</a><a href="#m3">Mod III</a><a href="#m4">Mod IV</a><a href="#m5">Mod V</a><a href="#m6">Mod VI</a><a href="#rev">Revision</a>
   <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light or dark mode">🌙 Dark</button>
+  <button class="theme-btn" id="printBtn" type="button" aria-label="Print or save as PDF">🖨️ PDF</button>
 </nav>
 <script>
 (function(){
@@ -182,6 +187,21 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
     paint();
   });
   paint();
+
+  // print / save as PDF: always light, with practice answers expanded
+  var saved, closed = [];
+  window.addEventListener("beforeprint", function(){
+    saved = root.getAttribute("data-theme");
+    root.setAttribute("data-theme", "light");
+    closed = [].filter.call(document.querySelectorAll("details"), function(d){ return !d.open; });
+    closed.forEach(function(d){ d.open = true; });
+  });
+  window.addEventListener("afterprint", function(){
+    root.setAttribute("data-theme", saved || "light");
+    closed.forEach(function(d){ d.open = false; });
+    paint();
+  });
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
 })();
 </script>
 
