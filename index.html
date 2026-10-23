@@ -16,24 +16,6 @@
   --fill-y:#fff0a8; --fill-p:#ffd3e1; --fill-g:#d2f2d4; --fill-b:#d6e8ff; --fill-o:#ffe0c2; --fill-v:#e6dbff; --fill-gr:#ececec;
   --shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px rgba(60,40,10,.12);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --desk:#121318; --paper:#1d2027; --rule:rgba(140,170,210,.13); --margin:rgba(240,120,120,.35);
-    --ink:#e9e6dc; --ink-soft:#b6b3aa; --blue:#8fb4ff; --red:#ff8a7a; --green:#7fd68a; --purple:#c2a8ff; --orange:#ffb066;
-    --hl-y:rgba(255,215,0,.28); --hl-p:rgba(255,105,160,.3); --hl-g:rgba(90,200,110,.3); --hl-b:rgba(90,160,255,.3);
-    --sticky:#4a4220; --sticky-ink:#fff4c2; --tape:rgba(160,150,120,.4);
-    --fill-y:#4a4220; --fill-p:#4d2636; --fill-g:#1f3d24; --fill-b:#1e3150; --fill-o:#4a321c; --fill-v:#33294d; --fill-gr:#30333a;
-    --shadow:0 8px 24px rgba(0,0,0,.5);
-  }
-}
-:root[data-theme="dark"]{
-  --desk:#121318; --paper:#1d2027; --rule:rgba(140,170,210,.13); --margin:rgba(240,120,120,.35);
-  --ink:#e9e6dc; --ink-soft:#b6b3aa; --blue:#8fb4ff; --red:#ff8a7a; --green:#7fd68a; --purple:#c2a8ff; --orange:#ffb066;
-  --hl-y:rgba(255,215,0,.28); --hl-p:rgba(255,105,160,.3); --hl-g:rgba(90,200,110,.3); --hl-b:rgba(90,160,255,.3);
-  --sticky:#4a4220; --sticky-ink:#fff4c2; --tape:rgba(160,150,120,.4);
-  --fill-y:#4a4220; --fill-p:#4d2636; --fill-g:#1f3d24; --fill-b:#1e3150; --fill-o:#4a321c; --fill-v:#33294d; --fill-gr:#30333a;
-  --shadow:0 8px 24px rgba(0,0,0,.5);
-}
 /* plain: black pen on plain white paper — no highlights, no colour, no ruled lines */
 :root[data-theme="plain"]{
   --desk:#ffffff; --paper:#ffffff; --rule:transparent; --margin:transparent;
@@ -127,16 +109,11 @@ svg .sk{filter:url(#rough)}
 .toc a{color:var(--ink);text-decoration:none;display:block;break-inside:avoid}
 .toc a:hover{color:var(--blue)}
 .toc .m{font-family:"Caveat";font-weight:700;font-size:26px;color:var(--red);margin-top:8px}
-.toc .w{float:right;font-size:15px;color:var(--ink-soft)}
+.toc .m{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.toc .w{font-size:15px;color:var(--ink-soft)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:16px;margin:10px 0 4px}
 .date{display:block;text-align:right;font-family:"Caveat";font-size:22px;line-height:28px;color:var(--ink-soft)}
 .weight{font-family:"Caveat";font-size:22px;color:var(--ink-soft);margin-left:10px}
-nav.tabs{position:sticky;top:0;z-index:5;display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:8px 8px 0;background:linear-gradient(var(--desk) 70%,transparent)}
-nav.tabs a{font-family:"Caveat";font-weight:700;font-size:21px;line-height:26px;text-decoration:none;color:#2b2b2b;padding:4px 14px 2px;border-radius:10px 10px 0 0;box-shadow:0 -1px 3px rgba(0,0,0,.12)}
-nav.tabs a:nth-child(1){background:#ffd166} nav.tabs a:nth-child(2){background:#ef9fbc} nav.tabs a:nth-child(3){background:#9ad1a0}
-nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#c9b3f2} nav.tabs a:nth-child(6){background:#ffb38a} nav.tabs a:nth-child(7){background:#d9d9d9}
-.theme-btn{font-family:"Caveat";font-weight:700;font-size:21px;line-height:26px;border:0;cursor:pointer;color:#2b2b2b;background:#fff3a3;padding:4px 14px 2px;border-radius:10px 10px 0 0;box-shadow:0 -1px 3px rgba(0,0,0,.12)}
-:root[data-theme="dark"] .theme-btn{background:#3a3f4b;color:#f3efe2}
 .qa summary{cursor:pointer;font-weight:700}
 .qa details{margin:4px 0;border-bottom:1.5px dashed color-mix(in srgb,var(--ink) 30%,transparent);padding-bottom:4px}
 .qa details p{color:var(--blue);padding-left:14px}
@@ -150,11 +127,7 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   h1{font-size:34px;line-height:44px}
   h2.mod{font-size:26px;line-height:38px}
   .date{position:static;display:block}
-  nav.tabs a{font-size:17px;padding:3px 9px 1px}
 }
-.modes{display:inline-flex;gap:4px}
-.mode-btn[aria-pressed="true"]{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
-:root[data-theme="plain"] nav.tabs a,:root[data-theme="plain"] .theme-btn{background:#fff;color:#111;border:1.5px solid #111;border-bottom:0}
 :root[data-theme="plain"] .page{box-shadow:none}
 :root[data-theme="plain"] .page::before{display:none}
 :root[data-theme="plain"] h3::after{background:none;border-bottom:1.5px solid #111;height:0}
@@ -166,16 +139,46 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
 :root[data-theme="plain"] figure svg,:root[data-theme="plain"] table.hand{filter:grayscale(1)}
 :root[data-theme="plain"] table.hand th{background:#fff}
 :root[data-theme="plain"] .legend{display:none}
+/* ---------- left outline (Google-Docs style) ---------- */
+.outline{position:fixed;left:0;top:0;bottom:0;width:270px;overflow-y:auto;z-index:20;background:var(--paper);
+  border-right:1.5px solid color-mix(in srgb,var(--ink) 14%,transparent);padding:14px 10px 40px 12px;font-size:14px;line-height:20px}
+@media screen{body{padding-left:270px}}
+h2,h3{scroll-margin-top:14px}
+.ol-tools{display:flex;flex-direction:column;gap:8px;padding:0 2px 14px;margin-bottom:8px;border-bottom:1.5px dashed color-mix(in srgb,var(--ink) 25%,transparent)}
+.seg{display:flex;border:1.5px solid var(--ink);border-radius:9px;overflow:hidden}
+.seg button,.tool-btn{font-family:"Caveat",cursive;font-weight:700;font-size:19px;line-height:24px;padding:4px 6px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.seg button{flex:1}
+.seg button+button{border-left:1.5px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.tool-btn{border:1.5px solid var(--ink);border-radius:9px}
+.seg button:hover,.tool-btn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.seg button[aria-pressed="true"]:hover{background:var(--ink)}
+.ol-title{font-family:"Caveat",cursive;font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:6px 8px 2px}
+#olList a{display:block;text-decoration:none;color:var(--ink);padding:3px 8px 3px 9px;border-left:3px solid transparent;border-radius:0 7px 7px 0}
+#olList a.l1{font-weight:700;margin-top:9px}
+#olList a.l2{padding-left:22px;font-size:13.5px;line-height:19px;color:var(--ink-soft)}
+#olList a:hover{background:color-mix(in srgb,var(--ink) 7%,transparent)}
+#olList a.active{border-left-color:var(--blue);color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,transparent)}
+:root[data-theme="plain"] #olList a.active{border-left-color:#111;color:#111;background:#eee}
+.outline-toggle{display:none}
+@media screen and (max-width:900px){
+  body{padding-left:0}
+  .outline{transform:translateX(-102%);transition:transform .2s ease;box-shadow:6px 0 24px rgba(0,0,0,.18);padding-top:58px;width:min(300px,86vw)}
+  .outline.open{transform:none}
+  .outline-toggle{display:block;position:fixed;top:10px;left:10px;z-index:21;font-family:"Caveat",cursive;font-weight:700;font-size:20px;
+    padding:4px 12px;border:1.5px solid var(--ink);border-radius:9px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  #top{padding-top:56px}
+}
 @page{margin:12mm}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   body{background:#fff}
-  nav.tabs{display:none}
+  .outline,.outline-toggle{display:none}
+  body{padding-left:0}
   .page{box-shadow:none;margin:0;max-width:none;break-before:page}
   .page:first-of-type{break-before:auto}
   figure,.card,.sticky,table.hand,.def{break-inside:avoid}
   h2,h3,h4{break-after:avoid}
-  #printBtn,.modes{display:none}
   .toc a{font-size:13px;line-height:19px;--lh:19px}
   .toc .m{font-size:17px;line-height:21px;--lh:21px}
   /* normal print sizes: ~10.5pt text on 21px ruled lines */
@@ -228,41 +231,17 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   </defs>
 </svg>
 
-<nav class="tabs">
-  <a href="#m1">Mod I</a><a href="#m2">Mod II</a><a href="#m3">Mod III</a><a href="#m4">Mod IV</a><a href="#m5">Mod V</a><a href="#m6">Mod VI</a><a href="#rev">Revision</a>
-  <span class="modes" role="group" aria-label="Page style">
-    <button class="theme-btn mode-btn" type="button" data-mode="light">🎨 Colour</button><button class="theme-btn mode-btn" type="button" data-mode="dark">🌙 Dark</button><button class="theme-btn mode-btn" type="button" data-mode="plain">📄 Plain</button>
-  </span>
-  <button class="theme-btn" id="printBtn" type="button" aria-label="Print or save as PDF">🖨️ PDF</button>
-</nav>
-<script>
-(function(){
-  var root=document.documentElement, btns=document.querySelectorAll(".mode-btn");
-  function paint(){
-    var cur=root.getAttribute("data-theme");
-    btns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-mode")===cur ? "true" : "false"); });
-  }
-  btns.forEach(function(b){
-    b.addEventListener("click", function(){ root.setAttribute("data-theme", b.getAttribute("data-mode")); paint(); });
-  });
-  paint();
-
-  // print / save as PDF: dark prints as colour, plain stays plain; practice answers expanded
-  var saved, closed = [];
-  window.addEventListener("beforeprint", function(){
-    saved = root.getAttribute("data-theme");
-    if (saved === "dark") root.setAttribute("data-theme", "light");
-    closed = [].filter.call(document.querySelectorAll("details"), function(d){ return !d.open; });
-    closed.forEach(function(d){ d.open = true; });
-  });
-  window.addEventListener("afterprint", function(){
-    root.setAttribute("data-theme", saved || "light");
-    closed.forEach(function(d){ d.open = false; });
-    paint();
-  });
-  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
-})();
-</script>
+<button class="outline-toggle" id="olToggle" type="button" aria-controls="outline" aria-expanded="false">☰ Outline</button>
+<aside class="outline" id="outline" aria-label="Document outline">
+  <div class="ol-tools">
+    <div class="seg" role="group" aria-label="Page style">
+      <button type="button" class="mode-btn" data-mode="light">🎨 Colour</button><button type="button" class="mode-btn" data-mode="plain">📄 Plain</button>
+    </div>
+    <button type="button" class="tool-btn" id="printBtn">🖨️ Print / Save PDF</button>
+  </div>
+  <div class="ol-title">Outline</div>
+  <nav id="olList"></nav>
+</aside>
 
 <!-- ============================ COVER ============================ -->
 <section class="page" id="top">
@@ -3252,5 +3231,58 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   <p class="soft" style="text-align:right;margin-top:20px">— end of notes · good luck! ✌</p>
 </section>
 
+<script>
+(function(){
+  var root=document.documentElement;
+  // Colour / Plain toggle
+  var btns=document.querySelectorAll(".mode-btn");
+  function paint(){ var cur=root.getAttribute("data-theme");
+    btns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-mode")===cur ? "true" : "false"); }); }
+  btns.forEach(function(b){ b.addEventListener("click", function(){ root.setAttribute("data-theme", b.getAttribute("data-mode")); paint(); }); });
+  paint();
+
+  // print: practice answers expanded
+  var closed=[];
+  window.addEventListener("beforeprint", function(){
+    closed=[].filter.call(document.querySelectorAll("details"), function(d){ return !d.open; });
+    closed.forEach(function(d){ d.open=true; });
+  });
+  window.addEventListener("afterprint", function(){ closed.forEach(function(d){ d.open=false; }); });
+  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+
+  // build outline: each module (h2) with its topics (h3)
+  var list=document.getElementById("olList"), links=[], n=0;
+  function add(el, level, text){
+    if(!el.id) el.id="sec-"+(++n);
+    var a=document.createElement("a"); a.href="#"+el.id; a.className="l"+level;
+    a.textContent=text.replace(/\s*★+\s*/g," ").replace(/\s+/g," ").trim();
+    list.appendChild(a); links.push({a:a, el:el});
+  }
+  document.querySelectorAll("section.page").forEach(function(sec){
+    var h2=sec.querySelector("h2.mod");
+    if(sec.id==="top"){ add(sec.querySelector("h1"), 1, "Cover & contents"); return; }
+    if(h2) add(h2, 1, h2.textContent);
+    sec.querySelectorAll("h3").forEach(function(h3){ add(h3, 2, h3.textContent); });
+  });
+
+  // highlight where you are
+  var ticking=false;
+  function spy(){
+    ticking=false; var cur=links[0];
+    for(var i=0;i<links.length;i++){ if(links[i].el.getBoundingClientRect().top<120) cur=links[i]; else break; }
+    links.forEach(function(l){ l.a.classList.toggle("active", l===cur); });
+    var box=document.getElementById("outline"), r=cur.a.getBoundingClientRect(), br=box.getBoundingClientRect();
+    if(r.top<br.top+90 || r.bottom>br.bottom-20) box.scrollTop+=r.top-br.top-160;
+  }
+  window.addEventListener("scroll", function(){ if(!ticking){ ticking=true; requestAnimationFrame(spy); } }, {passive:true});
+  spy();
+
+  // small screens: outline slides in
+  var tog=document.getElementById("olToggle"), side=document.getElementById("outline");
+  function setOpen(o){ side.classList.toggle("open", o); tog.setAttribute("aria-expanded", o); tog.textContent = o ? "✕ Close" : "☰ Outline"; }
+  tog.addEventListener("click", function(){ setOpen(!side.classList.contains("open")); });
+  list.addEventListener("click", function(e){ if(e.target.tagName==="A" && window.innerWidth<=900) setOpen(false); });
+})();
+</script>
 </body>
 </html>
