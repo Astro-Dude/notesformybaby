@@ -119,14 +119,29 @@ svg .sk{filter:url(#rough)}
 .qa details p{color:var(--blue);padding-left:14px}
 .mt{margin-top:14px}
 @media screen and (max-width:720px){
-  body{font-size:17px}
-  .page{margin:10px 0;padding:28px 16px 32px 40px;border-radius:0;background-image:linear-gradient(to right,transparent 28px,var(--margin) 28px,var(--margin) 30px,transparent 30px)}
+  body{font-size:16.5px;--lh:30px}
+  .page{margin:0 0 10px;padding:22px 14px 28px 30px;border-radius:0;box-shadow:none;background-image:linear-gradient(to right,transparent 18px,var(--margin) 18px,var(--margin) 19.5px,transparent 19.5px)}
   .page::before{display:none}
   .cols,.cols3{grid-template-columns:1fr}
   .toc{columns:1}
-  h1{font-size:34px;line-height:44px}
-  h2.mod{font-size:26px;line-height:38px}
-  .date{position:static;display:block}
+  h1{font-size:30px;line-height:38px}
+  h2.mod{font-size:23px;line-height:32px;transform:none}
+  h3{font-size:28px;line-height:36px}
+  h4{font-size:23px;line-height:28px}
+  .big{font-size:23px}
+  .legend{font-size:14px;gap:2px 14px}
+  .sticky{margin:18px 2px;transform:none}
+  .def,.card,.exam,.gap{padding-left:12px;padding-right:12px}
+  ul,ol{padding-left:24px}
+  /* wide diagrams: keep labels readable, swipe sideways */
+  figure{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-left:-8px;margin-right:-8px;padding:0 8px}
+  figure svg[viewBox^="0 0 860"]{min-width:640px}
+  figure:has(svg[viewBox^="0 0 860"])::after{content:"↔ swipe to see the whole diagram";display:block;font-family:"Caveat",cursive;font-size:16px;color:var(--ink-soft);text-align:left;position:sticky;left:0}
+  /* wide tables scroll instead of squashing */
+  table.hand{font-size:15px;line-height:22px}
+  table.hand:has(th:nth-child(4)){min-width:600px}
+  table.hand:has(th:nth-child(3)):not(:has(th:nth-child(4))){min-width:480px}
+  .tw{margin:0 -8px;padding:0 8px}
 }
 :root[data-theme="plain"] .page{box-shadow:none}
 :root[data-theme="plain"] .page::before{display:none}
@@ -162,12 +177,14 @@ h2,h3{scroll-margin-top:14px}
 :root[data-theme="plain"] #olList a.active{border-left-color:#111;color:#111;background:#eee}
 .outline-toggle{display:none}
 @media screen and (max-width:900px){
-  body{padding-left:0}
-  .outline{transform:translateX(-102%);transition:transform .2s ease;box-shadow:6px 0 24px rgba(0,0,0,.18);padding-top:58px;width:min(300px,86vw)}
+  body{padding-left:0;padding-top:46px}
+  h2,h3{scroll-margin-top:58px}
+  .outline{transform:translateX(-102%);transition:transform .2s ease;box-shadow:6px 0 24px rgba(0,0,0,.18);padding-top:58px;width:min(310px,88vw)}
   .outline.open{transform:none}
-  .outline-toggle{display:block;position:fixed;top:10px;left:10px;z-index:21;font-family:"Caveat",cursive;font-weight:700;font-size:20px;
-    padding:4px 12px;border:1.5px solid var(--ink);border-radius:9px;background:var(--paper);color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-  #top{padding-top:56px}
+  .outline-toggle{display:flex;align-items:center;gap:10px;position:fixed;top:0;left:0;right:0;height:46px;z-index:21;padding:0 14px;
+    font-family:"Caveat",cursive;font-weight:700;font-size:20px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    border:0;border-bottom:1.5px solid color-mix(in srgb,var(--ink) 18%,transparent);background:var(--paper);color:var(--ink);cursor:pointer}
+  .outline-toggle .cur{font-family:"Kalam",cursive;font-weight:400;font-size:14px;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis}
 }
 @page{margin:12mm}
 @media print{
@@ -3271,6 +3288,7 @@ h2,h3{scroll-margin-top:14px}
     ticking=false; var cur=links[0];
     for(var i=0;i<links.length;i++){ if(links[i].el.getBoundingClientRect().top<120) cur=links[i]; else break; }
     links.forEach(function(l){ l.a.classList.toggle("active", l===cur); });
+    if(window.__olCur) window.__olCur(cur.a.textContent);
     var box=document.getElementById("outline"), r=cur.a.getBoundingClientRect(), br=box.getBoundingClientRect();
     if(r.top<br.top+90 || r.bottom>br.bottom-20) box.scrollTop+=r.top-br.top-160;
   }
@@ -3279,9 +3297,17 @@ h2,h3{scroll-margin-top:14px}
 
   // small screens: outline slides in
   var tog=document.getElementById("olToggle"), side=document.getElementById("outline");
-  function setOpen(o){ side.classList.toggle("open", o); tog.setAttribute("aria-expanded", o); tog.textContent = o ? "✕ Close" : "☰ Outline"; }
+  var curText="";
+  function label(){
+    var open=side.classList.contains("open");
+    tog.textContent = open ? "✕ Close" : "☰ Outline";
+    if(!open && curText){ var s=document.createElement("span"); s.className="cur"; s.textContent="· "+curText; tog.appendChild(s); }
+  }
+  function setOpen(o){ side.classList.toggle("open", o); tog.setAttribute("aria-expanded", o); label(); }
+  window.__olCur=function(t){ curText=t; label(); };
   tog.addEventListener("click", function(){ setOpen(!side.classList.contains("open")); });
   list.addEventListener("click", function(e){ if(e.target.tagName==="A" && window.innerWidth<=900) setOpen(false); });
+  spy();
 })();
 </script>
 </body>
