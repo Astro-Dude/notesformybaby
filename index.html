@@ -36,10 +36,12 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--desk);color:var(--ink);font-family:"Kalam","Comic Sans MS",cursive;font-size:18px;line-height:32px;font-weight:400}
+body{--lh:32px;margin:0;background:var(--desk);color:var(--ink);font-family:"Kalam","Comic Sans MS",cursive;font-size:18px;line-height:var(--lh);font-weight:400}
+/* ruled lines live under each line of text, so text always sits on a line */
+.page p,.page ul,.page ol,.toc a{background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--lh) - 3px),var(--rule) calc(var(--lh) - 3px),var(--rule) calc(var(--lh) - 2px),transparent calc(var(--lh) - 2px),transparent var(--lh))}
+.sticky p,.sticky ul,.sticky ol,figure p{background-image:none}
 .page{max-width:960px;margin:28px auto;background-color:var(--paper);
-  background-image:linear-gradient(to right,transparent 62px,var(--margin) 62px,var(--margin) 64px,transparent 64px),
-                   repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);
+  background-image:linear-gradient(to right,transparent 62px,var(--margin) 62px,var(--margin) 64px,transparent 64px);
   padding:40px 40px 48px 86px;box-shadow:var(--shadow);border-radius:3px;position:relative}
 .page::before{content:"";position:absolute;left:22px;top:0;bottom:0;width:18px;
   background:radial-gradient(circle at 9px 16px,var(--desk) 7px,transparent 8px) 0 0/18px 64px repeat-y;opacity:.9}
@@ -132,7 +134,7 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
 .mt{margin-top:14px}
 @media (max-width:720px){
   body{font-size:17px}
-  .page{margin:10px 0;padding:28px 16px 32px 40px;border-radius:0;background-image:linear-gradient(to right,transparent 28px,var(--margin) 28px,var(--margin) 30px,transparent 30px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px)}
+  .page{margin:10px 0;padding:28px 16px 32px 40px;border-radius:0;background-image:linear-gradient(to right,transparent 28px,var(--margin) 28px,var(--margin) 30px,transparent 30px)}
   .page::before{display:none}
   .cols,.cols3{grid-template-columns:1fr}
   .toc{columns:1}
@@ -152,10 +154,10 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   h2,h3,h4{break-after:avoid}
   #printBtn,#themeBtn{display:none}
   /* normal print sizes: ~10.5pt text on 21px ruled lines */
-  body{font-size:14px;line-height:21px}
+  body{--lh:21px;font-size:14px}
+  #top{break-after:page}
   .page{padding:6px 6px 10px 44px;border-radius:0;
-    background-image:linear-gradient(to right,transparent 30px,var(--margin) 30px,var(--margin) 31.5px,transparent 31.5px),
-                     repeating-linear-gradient(to bottom,transparent 0,transparent 20px,var(--rule) 20px,var(--rule) 21px)}
+    background-image:linear-gradient(to right,transparent 30px,var(--margin) 30px,var(--margin) 31.5px,transparent 31.5px)}
   .page::before{display:none}
   h1{font-size:30px;line-height:38px}
   h2.mod{font-size:22px;line-height:30px}
