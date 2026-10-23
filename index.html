@@ -34,6 +34,15 @@
   --fill-y:#4a4220; --fill-p:#4d2636; --fill-g:#1f3d24; --fill-b:#1e3150; --fill-o:#4a321c; --fill-v:#33294d; --fill-gr:#30333a;
   --shadow:0 8px 24px rgba(0,0,0,.5);
 }
+/* plain: black pen on plain white paper — no highlights, no colour, no ruled lines */
+:root[data-theme="plain"]{
+  --desk:#ffffff; --paper:#ffffff; --rule:transparent; --margin:transparent;
+  --ink:#111111; --ink-soft:#444444; --blue:#111111; --red:#111111; --green:#111111; --purple:#111111; --orange:#111111;
+  --hl-y:transparent; --hl-p:transparent; --hl-g:transparent; --hl-b:transparent;
+  --sticky:#ffffff; --sticky-ink:#111111; --tape:transparent;
+  --fill-y:#ffffff; --fill-p:#ffffff; --fill-g:#ffffff; --fill-b:#ffffff; --fill-o:#ffffff; --fill-v:#ffffff; --fill-gr:#ffffff;
+  --shadow:none;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{--lh:32px;margin:0;background:var(--desk);color:var(--ink);font-family:"Kalam","Comic Sans MS",cursive;font-size:18px;line-height:var(--lh);font-weight:400}
@@ -132,7 +141,7 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
 .qa details{margin:4px 0;border-bottom:1.5px dashed color-mix(in srgb,var(--ink) 30%,transparent);padding-bottom:4px}
 .qa details p{color:var(--blue);padding-left:14px}
 .mt{margin-top:14px}
-@media (max-width:720px){
+@media screen and (max-width:720px){
   body{font-size:17px}
   .page{margin:10px 0;padding:28px 16px 32px 40px;border-radius:0;background-image:linear-gradient(to right,transparent 28px,var(--margin) 28px,var(--margin) 30px,transparent 30px)}
   .page::before{display:none}
@@ -143,6 +152,20 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   .date{position:static;display:block}
   nav.tabs a{font-size:17px;padding:3px 9px 1px}
 }
+.modes{display:inline-flex;gap:4px}
+.mode-btn[aria-pressed="true"]{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+:root[data-theme="plain"] nav.tabs a,:root[data-theme="plain"] .theme-btn{background:#fff;color:#111;border:1.5px solid #111;border-bottom:0}
+:root[data-theme="plain"] .page{box-shadow:none}
+:root[data-theme="plain"] .page::before{display:none}
+:root[data-theme="plain"] h3::after{background:none;border-bottom:1.5px solid #111;height:0}
+:root[data-theme="plain"] .sticky,:root[data-theme="plain"] .sticky.r{transform:none;box-shadow:none;border:1.5px solid #111;border-radius:6px 2px 7px 3px}
+:root[data-theme="plain"] .sticky::before{display:none}
+:root[data-theme="plain"] .def,:root[data-theme="plain"] .exam{background:#fff}
+:root[data-theme="plain"] .hl,:root[data-theme="plain"] .hp,:root[data-theme="plain"] .hg,:root[data-theme="plain"] .hb{background:none;padding:0}
+:root[data-theme="plain"] .u{text-decoration-color:#111}
+:root[data-theme="plain"] figure svg,:root[data-theme="plain"] table.hand{filter:grayscale(1)}
+:root[data-theme="plain"] table.hand th{background:#fff}
+:root[data-theme="plain"] .legend{display:none}
 @page{margin:12mm}
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -152,7 +175,9 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   .page:first-of-type{break-before:auto}
   figure,.card,.sticky,table.hand,.def{break-inside:avoid}
   h2,h3,h4{break-after:avoid}
-  #printBtn,#themeBtn{display:none}
+  #printBtn,.modes{display:none}
+  .toc a{font-size:13px;line-height:19px;--lh:19px}
+  .toc .m{font-size:17px;line-height:21px;--lh:21px}
   /* normal print sizes: ~10.5pt text on 21px ruled lines */
   body{--lh:21px;font-size:14px}
   #top{break-after:page}
@@ -205,25 +230,28 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
 
 <nav class="tabs">
   <a href="#m1">Mod I</a><a href="#m2">Mod II</a><a href="#m3">Mod III</a><a href="#m4">Mod IV</a><a href="#m5">Mod V</a><a href="#m6">Mod VI</a><a href="#rev">Revision</a>
-  <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light or dark mode">🌙 Dark</button>
+  <span class="modes" role="group" aria-label="Page style">
+    <button class="theme-btn mode-btn" type="button" data-mode="light">🎨 Colour</button><button class="theme-btn mode-btn" type="button" data-mode="dark">🌙 Dark</button><button class="theme-btn mode-btn" type="button" data-mode="plain">📄 Plain</button>
+  </span>
   <button class="theme-btn" id="printBtn" type="button" aria-label="Print or save as PDF">🖨️ PDF</button>
 </nav>
 <script>
 (function(){
-  var root=document.documentElement, btn=document.getElementById("themeBtn");
-  function paint(){ btn.textContent = root.getAttribute("data-theme")==="dark" ? "☀️ Light" : "🌙 Dark"; }
-  btn.addEventListener("click", function(){
-    var next = root.getAttribute("data-theme")==="dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    paint();
+  var root=document.documentElement, btns=document.querySelectorAll(".mode-btn");
+  function paint(){
+    var cur=root.getAttribute("data-theme");
+    btns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-mode")===cur ? "true" : "false"); });
+  }
+  btns.forEach(function(b){
+    b.addEventListener("click", function(){ root.setAttribute("data-theme", b.getAttribute("data-mode")); paint(); });
   });
   paint();
 
-  // print / save as PDF: always light, with practice answers expanded
+  // print / save as PDF: dark prints as colour, plain stays plain; practice answers expanded
   var saved, closed = [];
   window.addEventListener("beforeprint", function(){
     saved = root.getAttribute("data-theme");
-    root.setAttribute("data-theme", "light");
+    if (saved === "dark") root.setAttribute("data-theme", "light");
     closed = [].filter.call(document.querySelectorAll("details"), function(d){ return !d.open; });
     closed.forEach(function(d){ d.open = true; });
   });
