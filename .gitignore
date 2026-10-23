@@ -1,0 +1,4 @@
+# publish only the notes page
+*
+!index.html
+!.gitignore
