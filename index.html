@@ -151,6 +151,35 @@ nav.tabs a:nth-child(4){background:#9cc3f5} nav.tabs a:nth-child(5){background:#
   figure,.card,.sticky,table.hand,.def{break-inside:avoid}
   h2,h3,h4{break-after:avoid}
   #printBtn,#themeBtn{display:none}
+  /* normal print sizes: ~10.5pt text on 21px ruled lines */
+  body{font-size:14px;line-height:21px}
+  .page{padding:6px 6px 10px 44px;border-radius:0;
+    background-image:linear-gradient(to right,transparent 30px,var(--margin) 30px,var(--margin) 31.5px,transparent 31.5px),
+                     repeating-linear-gradient(to bottom,transparent 0,transparent 20px,var(--rule) 20px,var(--rule) 21px)}
+  .page::before{display:none}
+  h1{font-size:30px;line-height:38px}
+  h2.mod{font-size:22px;line-height:30px}
+  h3{font-size:24px;line-height:30px;margin:14px 0 2px}
+  h4{font-size:19px;line-height:23px;margin:10px 0 1px}
+  .big{font-size:20px}
+  .date,.weight,figcaption{font-size:15px;line-height:19px}
+  .def,.card,.exam,.gap{padding:4px 10px 5px;margin:8px 0}
+  .def::before{font-size:16px;line-height:20px;top:-12px}
+  .sticky{line-height:19px;padding:9px 12px 8px;margin:12px 4px}
+  .sticky .t{font-size:18px}
+  .exam::before{font-size:17px}
+  .gap{font-size:12.5px;line-height:18px}
+  table.hand{font-size:12.5px;line-height:17px;margin:8px 0}
+  table.hand th{font-size:16px;padding:3px 8px}
+  table.hand td{padding:3px 8px}
+  figure{margin:8px 0 10px}
+  figure svg{max-width:600px}
+  .cols figure svg{max-width:100%}
+  ul,ol{padding-left:22px}
+  ul>li::before{left:-19px;font-size:12px}
+  .cols,.cols3{gap:2px 18px}
+  .legend{font-size:13px}
+  .toc .m{font-size:19px;margin-top:4px}
 }
 </style>
 </head>
